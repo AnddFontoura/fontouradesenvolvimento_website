@@ -14,3 +14,19 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::group(['prefix' => 'news-category', 'middleware' => 'isAdmin'], function() {
+        Route::match(['get','post'], '/', 'NewsCategoriesController@index');
+        Route::get('form', 'NewsCategoriesController@create');
+        Route::get('form/{id}','NewsCategoriesController@create');
+        Route::post('save', 'NewsCategoriesController@store');
+        Route::post('save/{id}', 'NewsCategoriesController@update');
+        Route::get('view/{id}', 'NewsCategoriesController@view');
+        Route::get('delete/{id}', 'NewsCategoriesController@destroy');
+    });
+});
