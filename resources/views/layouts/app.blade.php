@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -9,17 +9,13 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/jquery.js') }}"></script>
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="{{ asset('js/bootstrap.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('summernote/summernote-bs4.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -88,5 +84,18 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="{{ asset('js/bootstrap.js') }}" defer></script>
+    <script src="https://kit.fontawesome.com/0cc6f43f73.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('summernote/summernote-bs4.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote();
+        });
+    </script>
 </body>
 </html>

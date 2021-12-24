@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 class NewsCategoriesController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function index(Request $request)
     {
@@ -23,24 +23,23 @@ class NewsCategoriesController extends Controller
         $categoryName = $request->get('categoryName');
 
         $newsCategories = NewsCategory::select();
-    
-        if (!$categoryId) {
+
+        if (!empty($categoryId)) {
             $newsCategories = $newsCategories->where('id', $categoryId);
         }
 
-        if (!$categoryName) {
+        if (!empty($categoryName)) {
             $newsCategories = $newsCategories->where('name', 'like', '%' . $categoryName . '%');
         }
 
-        $newsCategories = $newsCategories->paginate(env('PAGINATE_AMOUNT'), 10);
+        $newsCategories = $newsCategories->paginate(env('PAGINATE_AMOUNT'));
 
         return view('admin.news_category.index', compact('newsCategories'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param int|null $id
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create(int $id = null)
     {
@@ -50,62 +49,52 @@ class NewsCategoriesController extends Controller
             $newsCategory = NewsCategory::where('id', $id)->first();
         }
 
-        return view('admin.news_category.index', compact('newsCategory'));
+        return view('admin.news_category.form', compact('newsCategory'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|max:500|min:4|unique:news_categories',
+            'description' => 'nullable|string|max:1000|min:1',
+            'icon_image' => 'nullable|string|max:500|min:1',
+            'image_path' => 'nullable|file|mime:jpg,png,jpeg',
+        ]);
+
+        $request = $request->only(['name', 'description', 'icon_image', 'image_path']);
+
+        $newsCategory = NewsCategory::create($request);
+
+        return redirect('news-category')->with('messageSuccess', 'Categoria de notícia adicionada com sucesso');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        $newsCategory = NewsCategory::where('id', $id)->first();
+
+        return view('admin.news_category.show', compact('newsCategory'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string|max:500|min:4|unique:news_categories,name,' . $id,
+            'description' => 'nullable|string|max:1000|min:1',
+            'icon_image' => 'nullable|string|max:500|min:1',
+            'image_path' => 'nullable|file|mime:jpg,png,jpeg',
+        ]);
+
+        $request = $request->only(['name', 'description', 'icon_image', 'image_path']);
+
+        $newsCategory = NewsCategory::where('id', $id)->update($request);
+
+        return redirect('news-category')->with('messageSuccess', 'Categoria de notícia editada com sucesso.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        $newsCategory = NewsCategory::where('id', $id)->delete();
+
+        return redirect('news-category')->with('messageWarning', 'Categoria de notícia deletada com sucesso.');
     }
 }
