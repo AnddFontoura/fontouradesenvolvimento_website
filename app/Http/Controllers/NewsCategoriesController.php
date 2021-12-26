@@ -72,7 +72,7 @@ class NewsCategoriesController extends Controller
     {
         $newsCategory = NewsCategory::where('id', $id)->first();
 
-        return view('admin.news_category.show', compact('newsCategory'));
+        return view('admin.news_category.view', compact('newsCategory'));
     }
 
     public function update(Request $request, $id)

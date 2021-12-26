@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('form/{id}','NewsCategoriesController@create');
         Route::post('save', 'NewsCategoriesController@store');
         Route::post('save/{id}', 'NewsCategoriesController@update');
-        Route::get('view/{id}', 'NewsCategoriesController@view');
+        Route::get('view/{id}', 'NewsCategoriesController@show');
         Route::get('delete/{id}', 'NewsCategoriesController@destroy');
     });
 });

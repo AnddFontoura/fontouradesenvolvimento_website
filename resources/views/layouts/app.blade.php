@@ -91,11 +91,14 @@
     <script src="{{ asset('js/bootstrap.js') }}" defer></script>
     <script src="https://kit.fontawesome.com/0cc6f43f73.js" crossorigin="anonymous"></script>
     <script src="{{ asset('summernote/summernote-bs4.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(document).ready(function() {
             $('#summernote').summernote();
         });
     </script>
+
+    @yield('page_js')
 </body>
 </html>

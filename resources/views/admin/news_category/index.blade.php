@@ -43,7 +43,7 @@
                                             <td style="text-align: right">
                                                 <a href="{{ url('news-category/view') }}/{{ $newCategory->id }}" class="btn btn-warning"> <i class="far fa-eye"></i> </a>
                                                 <a href="{{ url('news-category/form') }}/{{ $newCategory->id }}" class="btn btn-primary"> <i class="far fa-edit"></i> </a>
-                                                <a href="{{ url('news-category/delete') }}/{{ $newCategory->id }}" class="btn btn-danger"> <i class="far fa-trash-alt"></i> </a>
+                                                <div class="btn btn-danger" id="deleteNewsCategory" data-id="{{ $newCategory->id }}"> <i class="far fa-trash-alt"></i> </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -61,4 +61,59 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('page_js')
+<script>
+    $('#deleteNewsCategory').on('click', function() {
+        var id = $(this).data('id');
+
+        Swal.fire({
+            title: "Atenção!",
+            text: "Você está prestes a deletar dessa categoria, você tem certeza que deseja continuar?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, continuar'
+        }).then((result) => {
+            if (result.value) {
+                var request = $.ajax({
+                    url: "{{ url('news-category/delete/') }}" + "/" +id,
+                    method: "POST",
+                    data: { id : id },
+                    dataType: "json"
+                });
+
+                request.done(function() {
+                    Swal.fire({
+                        title: 'Pronto!',
+                        text: 'A alteração foi realizada com sucesso',
+                        type: 'success',
+                        buttons: true,
+                    })
+                        .then((buttonClick) => {
+                            if (buttonClick) {
+                                location.reload();
+                            }
+                        });
+                });
+
+                request.fail(function( ) {
+                    Swal.fire(
+                        'Erro',
+                        'Algum problema aconteceu, certifique-se de que a conexão com a internet esteja OK e que você esteja logado no sistema.',
+                        'error'
+                    )
+                });
+            } else if (result.dismiss === 'cancel') {
+                Swal.fire(
+                    'Operação Cancelada',
+                    'Nenhuma alteração foi realizada.',
+                    'error'
+                )
+            }
+        });
+    });
+</script>
 @endsection
