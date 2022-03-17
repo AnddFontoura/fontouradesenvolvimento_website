@@ -15,6 +15,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.2.0/dist/select2-bootstrap-5-theme.min.css" />
     <link href="{{ asset('summernote/summernote-bs4.css') }}" rel="stylesheet">
     <link href="{{ asset('css/website.css')}}" rel="stylesheet">
   </head>
@@ -30,15 +32,28 @@
           </div>
           <div class="col-4 d-flex justify-content-end align-items-center">
             <div class="row m-0">
-              <div class="col-12 mb-3">
-                <a class="btn btn-primary w-100" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
-                  Login
-                </a>
-              </div>
-              <div class="col-12 mb-3">
-                <a class="btn btn-success w-100" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">
-                  Cadastre-se
-                </a>
+                @auth
+                  <div class="col-12 mb-3">
+                    <a class="btn btn-danger w-100" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+                  </div>
+                  
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      @csrf
+                  </form>
+                @else            
+                  <div class="col-12 mb-3">
+                    <a class="btn btn-primary w-100" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+                      Login
+                    </a>
+                  </div>
+                  <div class="col-12 mb-3">
+                    <a class="btn btn-success w-100" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">
+                      Cadastre-se
+                    </a>
+                  </div>
+                @endauth
               </div>
             <div>
           </div>
@@ -98,19 +113,41 @@
 
       <div class="row g-5">
         <div class="col-md-8">
-          <article class="blog-post">
-            <h2 class="blog-post-title">Sample blog post</h2>
-            <p class="blog-post-meta">January 1, 2021 by <a href="#">Mark</a></p>
-
-            <p>This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, lists, tables, images, code, and more are all supported as expected.</p>
-            <hr>
-            <p>This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.</p>
-          </article>
-
+          @yield('content')
+         
         </div>
 
         <div class="col-md-4">
           <div class="position-sticky" style="top: 2rem;">
+            @auth
+              <div class="mb-3">
+                @if(Auth::user()->is_admin)
+                  <a href="{{ url('admin/news-category') }}"> 
+                    <div class='bg-blue-img w-100 p-2 mb-1 rounded shadow'> 
+                      Categorias de Notícias 
+                    </div>
+                  </a>
+                  
+                  <a href="{{ url('admin/news') }}"> 
+                    <div class='bg-blue-img w-100 p-2 mb-1 rounded shadow'> 
+                      Notícias 
+                    </div>
+                  </a>
+                @endif
+                  <a href="#"> 
+                    <div class='bg-blue-img w-100 p-2 mb-1 rounded shadow'> 
+                      Meus dados 
+                    </div>
+                  </a>
+                  
+                  <a href="#"> 
+                    <div class='bg-blue-img w-100 p-2 mb-1 rounded shadow'> 
+                      Notificações 
+                    </div>
+                  </a>
+              </div>
+            @endauth
+
             <div class="p-4 mb-3 bg-light rounded shadow">
               <h4 class="fst-italic"> Sobre </h4>
               <p class="mb-0">
@@ -188,7 +225,7 @@
           <div class="modal-body">
               @csrf
               <div class="form-group mb-3">
-                  <label for="name" class="form-label">{{ __('Name') }}</label>
+                  <label for="name" class="form-label">{{ __('basic.form.name') }}</label>
                   <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                   @error('name')
@@ -199,7 +236,7 @@
               </div>
 
               <div class="form-group mb-3">
-                  <label for="email" class="form-label">{{ __('E-Mail Address') }}</label>
+                  <label for="email" class="form-label">{{ __('basic.form.email') }}</label>
                   <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                   @error('email')
@@ -210,7 +247,7 @@
               </div>
 
               <div class="form-group mb-3">
-                  <label for="password" class="form-label">{{ __('Password') }}</label>
+                  <label for="password" class="form-label">{{ __('basic.form.password') }}</label>
                   <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
                   @error('password')
@@ -221,7 +258,7 @@
               </div>
 
               <div class="form-group  mb-3">
-                  <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
+                  <label for="password-confirm" class="form-label">{{ __('basic.form.confirm_password') }}</label>
                   <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
               </div>
 
@@ -236,50 +273,50 @@
       </form>
     </div>
 
-        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <form method="POST" action="{{ route('login') }}">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Login</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <form method="POST" action="{{ route('login') }}">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              @csrf
+              <div class="form-group mb-3">
+                  <label for="email" class="col-form-label"> {{ __('basic.form.email') }} </label>
+                  <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                  @error('email')
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                  @enderror
               </div>
-              <div class="modal-body">
-                  @csrf
-                  <div class="form-group mb-3">
-                      <label for="email" class="col-form-label"> E-mail </label>
-                      <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                      @error('email')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                      @enderror
-                  </div>
 
-                  <div class="form-group">
-                      <label for="password" class="form-label"> {{ __('basic.password') }} </label>
-                      <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                      @error('password')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                      @enderror
-                  </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">
-                        {{ __('Login') }}
-                    </button>
-                    @if (Route::has('password.request'))
-                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                            {{ __('basic.forgot_your_password') }}
-                        </a>
-                    @endif
-                </div>
+              <div class="form-group">
+                  <label for="password" class="form-label"> {{ __('basic.form.password') }} </label>
+                  <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                  @error('password')
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                  @enderror
               </div>
             </div>
-          </form>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">
+                    {{ __('Login') }}
+                </button>
+                @if (Route::has('password.request'))
+                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                        {{ __('basic.forgot_your_password') }}
+                    </a>
+                @endif
+            </div>
+          </div>
         </div>
+      </form>
+    </div>
 
 
     <!-- Scripts -->
@@ -289,10 +326,14 @@
     <script src="https://kit.fontawesome.com/0cc6f43f73.js" crossorigin="anonymous"></script>
     <script src="{{ asset('summernote/summernote-bs4.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
     $(document).ready(function() {
       $('#summernote').summernote();
+      $('.select2').select2({
+        theme: 'bootstrap-5'
+      });
     });
     </script>
 

@@ -51,7 +51,7 @@ class NewsController extends Controller
             $news = News::where('id', $id)->first();
         }
 
-        $newsCategories = NewsCategory::get();
+        $newsCategories = NewsCategory::orderBy('name', 'desc')->get();
 
         return view('admin.news.form', compact('news','newsCategories'));
     }

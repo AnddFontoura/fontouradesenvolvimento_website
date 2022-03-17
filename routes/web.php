@@ -20,23 +20,25 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::group(['prefix' => 'news-category', 'middleware' => 'isAdmin'], function() {
-        Route::match(['get','post'], '/', 'NewsCategoriesController@index');
-        Route::get('form', 'NewsCategoriesController@create');
-        Route::get('form/{id}','NewsCategoriesController@create');
-        Route::post('save', 'NewsCategoriesController@store');
-        Route::post('save/{id}', 'NewsCategoriesController@update');
-        Route::get('view/{id}', 'NewsCategoriesController@show');
-        Route::get('delete/{id}', 'NewsCategoriesController@destroy');
-    });
+    Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function() {
+        Route::group(['prefix' => 'news-category'], function() {
+            Route::match(['get','post'], '/', 'NewsCategoriesController@index');
+            Route::get('form', 'NewsCategoriesController@create');
+            Route::get('form/{id}','NewsCategoriesController@create');
+            Route::post('save', 'NewsCategoriesController@store');
+            Route::post('save/{id}', 'NewsCategoriesController@update');
+            Route::get('view/{id}', 'NewsCategoriesController@show');
+            Route::get('delete/{id}', 'NewsCategoriesController@destroy');
+        });
 
-    Route::group(['prefix' => 'news', 'middleware' => 'isAdmin'], function() {
-        Route::match(['get','post'], '/', 'NewsController@index');
-        Route::get('form', 'NewsController@create');
-        Route::get('form/{id}','NewsController@create');
-        Route::post('save', 'NewsController@store');
-        Route::post('save/{id}', 'NewsController@update');
-        Route::get('view/{id}', 'NewsController@show');
-        Route::get('delete/{id}', 'NewsController@destroy');
+        Route::group(['prefix' => 'news'], function() {
+            Route::match(['get','post'], '/', 'NewsController@index');
+            Route::get('form', 'NewsController@create');
+            Route::get('form/{id}','NewsController@create');
+            Route::post('save', 'NewsController@store');
+            Route::post('save/{id}', 'NewsController@update');
+            Route::get('view/{id}', 'NewsController@show');
+            Route::get('delete/{id}', 'NewsController@destroy');
+        });
     });
 });

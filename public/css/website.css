@@ -10,3 +10,13 @@ footer {
   background-color: #5C97BF;
   border-radius: 10px 10px 0px 0px;
 }
+
+.bg-blue-img {
+  background-image: url(../img/bg_blue.png);
+  color: white;
+}
+
+a, a:href, a:hover, a:link, a:visited {
+  color: none;
+  text-decoration: none;
+}
