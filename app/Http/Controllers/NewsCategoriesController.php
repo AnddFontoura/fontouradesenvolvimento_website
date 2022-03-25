@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\NewsCategory;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class NewsCategoriesController extends Controller
 {
@@ -65,7 +66,7 @@ class NewsCategoriesController extends Controller
 
         $newsCategory = NewsCategory::create($request);
 
-        return redirect('news-category')->with('messageSuccess', 'Categoria de notícia adicionada com sucesso');
+        return redirect('admin/news-category')->with('messageSuccess', 'Categoria de notícia adicionada com sucesso');
     }
 
     public function show($id)
@@ -88,13 +89,19 @@ class NewsCategoriesController extends Controller
 
         $newsCategory = NewsCategory::where('id', $id)->update($request);
 
-        return redirect('news-category')->with('messageSuccess', 'Categoria de notícia editada com sucesso.');
+        return redirect('admin/news-category')->with('messageSuccess', 'Categoria de notícia editada com sucesso.');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $newsCategory = NewsCategory::where('id', $id)->delete();
+        $this->validate($request, [
+            'id' => 'required|int'
+        ]);
 
-        return redirect('news-category')->with('messageWarning', 'Categoria de notícia deletada com sucesso.');
+        $newsCategoryId = $request->post('id');
+
+        $newsCategory = NewsCategory::where('id', $newsCategoryId)->delete();
+
+        return response()->json(['messageWarning' => 'Categoria de notícia deletada com sucesso.'], Response::HTTP_OK);
     }
 }

@@ -42,7 +42,7 @@
                                         <td style="text-align: right">
                                             <a href="{{ url('admin/news-category/view') }}/{{ $newCategory->id }}" class="btn btn-warning"> <i class="far fa-eye"></i> </a>
                                             <a href="{{ url('admin/news-category/form') }}/{{ $newCategory->id }}" class="btn btn-primary"> <i class="far fa-edit"></i> </a>
-                                            <div class="btn btn-danger" id="deleteNewsCategory" data-id="{{ $newCategory->id }}"> <i class="far fa-trash-alt"></i> </div>
+                                            <div class="btn btn-danger deleteNewsCategory" id="" data-id="{{ $newCategory->id }}"> <i class="far fa-trash-alt"></i> </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -63,7 +63,7 @@
 
 @section('page_js')
 <script>
-    $('#deleteNewsCategory').on('click', function() {
+    $('.deleteNewsCategory').on('click', function() {
         var id = $(this).data('id');
 
         Swal.fire({
@@ -76,8 +76,13 @@
             confirmButtonText: 'Sim, continuar'
         }).then((result) => {
             if (result.value) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
                 var request = $.ajax({
-                    url: "{{ url('news-category/delete/') }}" + "/" +id,
+                    url: "{{ url('admin/news-category/delete') }}",
                     method: "POST",
                     data: { id : id },
                     dataType: "json"

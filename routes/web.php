@@ -28,7 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('save', 'NewsCategoriesController@store');
             Route::post('save/{id}', 'NewsCategoriesController@update');
             Route::get('view/{id}', 'NewsCategoriesController@show');
-            Route::get('delete/{id}', 'NewsCategoriesController@destroy');
+            Route::post('delete', 'NewsCategoriesController@destroy');
         });
 
         Route::group(['prefix' => 'news'], function() {
@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('save', 'NewsController@store');
             Route::post('save/{id}', 'NewsController@update');
             Route::get('view/{id}', 'NewsController@show');
-            Route::get('delete/{id}', 'NewsController@destroy');
+            Route::post('delete', 'NewsController@destroy');
         });
     });
 });

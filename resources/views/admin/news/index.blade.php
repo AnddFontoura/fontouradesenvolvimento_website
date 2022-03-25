@@ -41,7 +41,7 @@
                                         <td style="text-align: right">
                                             <a href="{{ url('admin/news/view') }}/{{ $new->id }}" class="btn btn-warning"> <i class="far fa-eye"></i> </a>
                                             <a href="{{ url('admin/news/form') }}/{{ $new->id }}" class="btn btn-primary"> <i class="far fa-edit"></i> </a>
-                                            <div class="btn btn-danger" id="deleteNews" data-id="{{ $new->id }}"> <i class="far fa-trash-alt"></i> </div>
+                                            <div class="btn btn-danger deleteNews" id="" data-id="{{ $new->id }}"> <i class="far fa-trash-alt"></i> </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -62,7 +62,7 @@
 
 @section('page_js')
 <script>
-    $('#deleteNews').on('click', function() {
+    $('.deleteNews').on('click', function() {
         var id = $(this).data('id');
 
         Swal.fire({
@@ -75,8 +75,13 @@
             confirmButtonText: 'Sim, continuar'
         }).then((result) => {
             if (result.value) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
                 var request = $.ajax({
-                    url: "{{ url('admin/news/delete/') }}" + "/" +id,
+                    url: "{{ url('admin/news/delete') }}",
                     method: "POST",
                     data: { id : id },
                     dataType: "json"

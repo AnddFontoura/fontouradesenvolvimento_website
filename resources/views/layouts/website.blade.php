@@ -73,15 +73,15 @@
     </div>
 
     <main class="container">
-      <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+      <div class="p-4 p-md-5 mb-4 text-white rounded bg-blue-img">
         <div class="col-md-6 px-0">
           <h1 class="display-4 fst-italic"> Fontoura Desenvolvimento </h1>
           <p class="lead my-3"> Site, blog, apresentação pessoal, tudo em um só lugar. </p>
-          <p class="lead mb-0"><a href="#" class="text-white fw-bold"> Saiba mais </a></p>
+          <!--p class="lead mb-0"><a href="#" class="text-white fw-bold"> Saiba mais </a></p-->
         </div>
       </div>
 
-      <div class="row mb-2">
+      <!--div class="row mb-2">
         <div class="col-md-6">
           <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
@@ -109,7 +109,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div-->
 
       <div class="row g-5">
         <div class="col-md-8">
@@ -157,14 +157,41 @@
               </p>
             </div>
 
-            <div class="p-4">
-              <h4 class="fst-italic">Categorias</h4>
+            <div class="mb-3">
+              <h4 class="fst-italic">Últimas publicações</h4>
               <ol class="list-unstyled mb-0">
-                <li><a href="#">March 2021</a></li>
+                @php
+                  $lastFiveNews = Helper::getLastFiveNews();
+                @endphp
+
+                @if(count($lastFiveNews) == 0)
+                  <div class='alert alert-danger'> Nenhuma publicação encontrada </div>
+                @else
+                  @foreach($lastFiveNews as $lastNews) 
+                    <li><a href="#"> {{ $$lastNews->name }} </a></li>
+                  @endforeach
+                @endif
               </ol>
             </div>
 
-            <div class="p-4">
+            <div class="mb-3">
+              <h4 class="fst-italic">Categorias</h4>
+              <ol class="list-unstyled mb-0">
+                @php
+                  $newsCategories = Helper::getAllNewsCategories();
+                @endphp
+
+                @if(count($newsCategories) == 0)
+                  <div class='alert alert-danger'> Nenhuma categoria encontrada </div>
+                @else
+                  @foreach($newsCategories as $newsCategory) 
+                    <li><a href="#"> {{ $newsCategory->name }} </a></li>
+                  @endforeach
+                @endif
+              </ol>
+            </div>
+
+            <div class="mb-3">
               <h4 class="fst-italic">Mais sobre mim</h4>
               <ol class="list-unstyled">
                 <li><a href="https://github.com/AnddFontoura">GitHub</a></li>
@@ -237,7 +264,7 @@
 
               <div class="form-group mb-3">
                   <label for="email" class="form-label">{{ __('basic.form.email') }}</label>
-                  <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                  <input id="email-register" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                   @error('email')
                       <span class="invalid-feedback" role="alert">
@@ -248,7 +275,7 @@
 
               <div class="form-group mb-3">
                   <label for="password" class="form-label">{{ __('basic.form.password') }}</label>
-                  <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                  <input id="password-register" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
                   @error('password')
                       <span class="invalid-feedback" role="alert">

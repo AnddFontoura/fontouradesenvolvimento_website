@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\NewsCategory;
 use Illuminate\Http\Request;
 use App\News;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class NewsController extends Controller
@@ -115,17 +116,23 @@ class NewsController extends Controller
 
         $news = News::where('id', $id)->update($request);
 
-        return redirect('news')->with('messageSuccess', 'Notícia editada com sucesso.');
+        return redirect('admin/news')->with('messageSuccess', 'Notícia editada com sucesso.');
     }
 
     /**
      * @param $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $news = News::where('id', $id)->delete();
+        $this->validate($request, [
+            'id' => 'required|int'
+        ]);
 
-        return redirect('news')->with('messageWarning', 'Notícia deletada com sucesso.');
+        $newsId = $request->post('id');
+
+        $news = News::where('id', $newsId)->delete();
+
+        return response()->json(['messageWarning' => 'Categoria de notícia deletada com sucesso.'], Response::HTTP_OK);
     }
 }
