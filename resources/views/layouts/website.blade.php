@@ -253,7 +253,7 @@
               @csrf
               <div class="form-group mb-3">
                   <label for="name" class="form-label">{{ __('basic.form.name') }}</label>
-                  <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                  <input id="nameRegister" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                   @error('name')
                       <span class="invalid-feedback" role="alert">
@@ -264,7 +264,7 @@
 
               <div class="form-group mb-3">
                   <label for="email" class="form-label">{{ __('basic.form.email') }}</label>
-                  <input id="email-register" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                  <input id="emailRegister" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                   @error('email')
                       <span class="invalid-feedback" role="alert">
@@ -312,7 +312,7 @@
               @csrf
               <div class="form-group mb-3">
                   <label for="email" class="col-form-label"> {{ __('basic.form.email') }} </label>
-                  <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                  <input id="emailLogin" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                   @error('email')
                       <span class="invalid-feedback" role="alert">
                           <strong>{{ $message }}</strong>

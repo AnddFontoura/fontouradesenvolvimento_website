@@ -6,12 +6,18 @@
     </div>
 
     <article class="blog-post">
-        <h2 class="blog-post-title">Sample blog post</h2>
-        <p class="blog-post-meta">January 1, 2021 by <a href="#">Mark</a></p>
+        <h2 class="blog-post-title"> Página em construção </h2>
+        <p class="blog-post-meta"> 18/06/2022</p>
 
-        <p>This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, lists, tables, images, code, and more are all supported as expected.</p>
-        <hr>
-        <p>This is some additional paragraph placeholder content. It has been written to fill the available space and show how a longer snippet of text affects the surrounding content. We'll repeat it often to keep the demonstration flowing, so be on the lookout for this exact same string of text.</p>
+        <p> No momento estou construindo uma página simples pra servir de apresentação sobre produtos e serviços oferecidos. </p>
+
+        <p> De sites pessoais a sistemas web faço criação, manutenção e melhorias em códigos web desenvolvidos em PHP </p>
+
+        <p> Palestras atendo: Conceito de programação, Lógica de programação, Excel básico a avançado, PHP do básico ao avançado e outros </p>
+
+        <p> Em portifólio consulte <a href="http://www.duarteveiculos.com.br" target="blank"> Duarte Veículos </a> e <a href="http://www.vetecg.com.br" target="blank"> VETECG </a> por enquanto </p> 
+    
+        <p> Em breve trarei alguns materiais interessantes sobre Programação e pretendo em breve começar a divulgar mais sobre cursos e serviços. Se precisar de algo entre em contato </p>
     </article>
 
 @endsection
