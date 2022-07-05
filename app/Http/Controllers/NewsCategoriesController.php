@@ -8,6 +8,12 @@ use Illuminate\Http\Response;
 
 class NewsCategoriesController extends Controller
 {
+    protected $model;
+
+    function __construct()
+    {
+        $this->model = NewsCategory::class;
+    }
     /**
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -23,7 +29,7 @@ class NewsCategoriesController extends Controller
         $categoryId = $request->get('categoryId');
         $categoryName = $request->get('categoryName');
 
-        $newsCategories = NewsCategory::select();
+        $newsCategories = $this->model::select();
 
         if (!empty($categoryId)) {
             $newsCategories = $newsCategories->where('id', $categoryId);
