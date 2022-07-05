@@ -42,3 +42,21 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 });
+
+Route::group(['prefix' => 'blog'], function() {
+    Route::group(['prefix' => 'posts'], function() {
+        Route::match(['get','post'], '/', 'BlogController@listPosts');
+        Route::get('{id}', 'BlogController@showPost');
+    });
+
+    Route::group(['prefix' => 'categories'], function() {
+        Route::match(['get','post'], '/', 'BlogController@listCategories');
+    });
+    
+    Route::group(['middleware' => 'auth'], function () {
+        Route::group(['prefix' => 'comment'], function() {
+            Route::post('/', 'BlogController@postComment');
+        });
+    });
+});
+

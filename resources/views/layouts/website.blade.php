@@ -1,5 +1,6 @@
   <!DOCTYPE html>
   <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,67 +21,87 @@
     <link href="{{ asset('summernote/summernote-bs4.css') }}" rel="stylesheet">
     <link href="{{ asset('css/website.css')}}" rel="stylesheet">
   </head>
+
   <body class=''>
-    <div class="container">
-      <header class="blog-header py-3">
-        <div class="row flex-nowrap justify-content-between align-items-center">
-          <div class="col-4 pt-1">
+    <nav class="navbar  fixed-top navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('img/texto.png') }}" width='200px'></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#"> Home </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#"> Blog </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#"> Sistemas </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#"> Cursos e Palestras </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#"> Portifólio </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#"> Fale Conosco </a>
+            </li>
+
+            <div class="btn-group">
+              @auth
+              <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                {{ __('Logout') }}
+              </a>
+
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+              </form>
+              @else
+              <a class="btn btn-primary " href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
+                Login
+              </a>
+              <a class="btn btn-success" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">
+                Cadastre-se
+              </a>
+              @endauth
+            </div>
+
+          </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid m-0 p-0 bg-blue-img mb-3" style="min-height: 500px;">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-12" style='min-height: 100px'>
 
           </div>
-          <div class="col-4 text-center">
-            <img class='img' width='200px' src="{{ asset('img/logo_fontoura.png')}}"> </img>
+
+          <div class="col-md-6 col-sm-12 col-lg-6">
+            <img src="{{ asset('img/dragao.png') }}" class='img' />
           </div>
-          <div class="col-4 d-flex justify-content-end align-items-center">
-            <div class="row m-0">
-                @auth
-                  <div class="col-12 mb-3">
-                    <a class="btn btn-danger w-100" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
-                    </a>
-                  </div>
-                  
-                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                      @csrf
-                  </form>
-                @else            
-                  <div class="col-12 mb-3">
-                    <a class="btn btn-primary w-100" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">
-                      Login
-                    </a>
-                  </div>
-                  <div class="col-12 mb-3">
-                    <a class="btn btn-success w-100" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">
-                      Cadastre-se
-                    </a>
-                  </div>
-                @endauth
+
+          <div class="col-md-6 col-ms-12 col-lg-6">
+            <div class="card text-dark bg-light shadow" style="opacity: 0.9">
+              <div class="card-body">
+                <h5 class="card-title">Estamos preparando esse site</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Mas acalme-se!</h6>
+                <p class="card-text">Você ainda pode entrar em contato de alguma maneira caso precise de algo.</p>
+                <a href="#" class="card-link">E-mail</a>
+                <a href="#" class="card-link">Whatsapp</a>
               </div>
-            <div>
+            </div>
           </div>
         </div>
-      </header>
-
-      <div class="nav-scroller py-1 mb-2">
-        <nav class="nav d-flex justify-content-between">
-          <a class="p-2 link-secondary" href="#"> Desenvolvimento de Sistemas </a>
-          <a class="p-2 link-secondary" href="#"> Sites e páginas pessoais </a>
-          <a class="p-2 link-secondary" href="#"> Artigos & Tutoriais </a>
-          <a class="p-2 link-secondary" href="#"> Cursos e Palestras </a>
-          <a class="p-2 link-secondary" href="#"> Portifólio </a>
-          <a class="p-2 link-secondary" href="#"> Futebol </a>
-        </nav>
       </div>
     </div>
 
     <main class="container">
-      <div class="p-4 p-md-5 mb-4 text-white rounded bg-blue-img">
-        <div class="col-md-6 px-0">
-          <h1 class="display-4 fst-italic"> Fontoura Desenvolvimento </h1>
-          <p class="lead my-3"> Site, blog, apresentação pessoal, tudo em um só lugar. </p>
-          <!--p class="lead mb-0"><a href="#" class="text-white fw-bold"> Saiba mais </a></p-->
-        </div>
-      </div>
-
       <!--div class="row mb-2">
         <div class="col-md-6">
           <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
@@ -114,38 +135,38 @@
       <div class="row g-5">
         <div class="col-md-8">
           @yield('content')
-         
+
         </div>
 
         <div class="col-md-4">
           <div class="position-sticky" style="top: 2rem;">
             @auth
-              <div class="mb-3">
-                @if(Auth::user()->is_admin)
-                  <a href="{{ url('admin/news-category') }}"> 
-                    <div class='bg-blue-img w-100 p-2 mb-1 rounded shadow'> 
-                      Categorias de Notícias 
-                    </div>
-                  </a>
-                  
-                  <a href="{{ url('admin/news') }}"> 
-                    <div class='bg-blue-img w-100 p-2 mb-1 rounded shadow'> 
-                      Notícias 
-                    </div>
-                  </a>
-                @endif
-                  <a href="#"> 
-                    <div class='bg-blue-img w-100 p-2 mb-1 rounded shadow'> 
-                      Meus dados 
-                    </div>
-                  </a>
-                  
-                  <a href="#"> 
-                    <div class='bg-blue-img w-100 p-2 mb-1 rounded shadow'> 
-                      Notificações 
-                    </div>
-                  </a>
-              </div>
+            <div class="mb-3">
+              @if(Auth::user()->is_admin)
+              <a href="{{ url('admin/news-category') }}">
+                <div class='btn btn-primary w-100 p-2 mb-1 rounded shadow'>
+                  Categorias de Notícias
+                </div>
+              </a>
+
+              <a href="{{ url('admin/news') }}">
+                <div class='btn btn-primary w-100 p-2 mb-1 rounded shadow'>
+                  Notícias
+                </div>
+              </a>
+              @endif
+              <a href="#">
+                <div class='btn btn-secondary  w-100 p-2 mb-1 rounded shadow'>
+                  Meus dados
+                </div>
+              </a>
+
+              <a href="#">
+                <div class='btn btn-secondary  w-100 p-2 mb-1 rounded shadow'>
+                  Notificações
+                </div>
+              </a>
+            </div>
             @endauth
 
             <div class="p-4 mb-3 bg-light rounded shadow">
@@ -161,15 +182,15 @@
               <h4 class="fst-italic">Últimas publicações</h4>
               <ol class="list-unstyled mb-0">
                 @php
-                  $lastFiveNews = Helper::getLastFiveNews();
+                $lastFiveNews = Helper::getLastFiveNews();
                 @endphp
 
                 @if(count($lastFiveNews) == 0)
-                  <div class='alert alert-danger'> Nenhuma publicação encontrada </div>
+                <div class='alert alert-danger'> Nenhuma publicação encontrada </div>
                 @else
-                  @foreach($lastFiveNews as $lastNews) 
-                    <li><a href="#"> {{ $$lastNews->name }} </a></li>
-                  @endforeach
+                @foreach($lastFiveNews as $lastNews)
+                <li><a href="#"> {{ $$lastNews->name }} </a></li>
+                @endforeach
                 @endif
               </ol>
             </div>
@@ -178,15 +199,15 @@
               <h4 class="fst-italic">Categorias</h4>
               <ol class="list-unstyled mb-0">
                 @php
-                  $newsCategories = Helper::getAllNewsCategories();
+                $newsCategories = Helper::getAllNewsCategories();
                 @endphp
 
                 @if(count($newsCategories) == 0)
-                  <div class='alert alert-danger'> Nenhuma categoria encontrada </div>
+                <div class='alert alert-danger'> Nenhuma categoria encontrada </div>
                 @else
-                  @foreach($newsCategories as $newsCategory) 
-                    <li><a href="#"> {{ $newsCategory->name }} </a></li>
-                  @endforeach
+                @foreach($newsCategories as $newsCategory)
+                <li><a href="#"> {{ $newsCategory->name }} </a></li>
+                @endforeach
                 @endif
               </ol>
             </div>
@@ -207,93 +228,95 @@
 
     </main>
 
-    <footer class="container">
-      <div class="row">
-        <div class="col-lg-4 col-sm-12 col-md-4">
-          <img class="img w-100 p-4" src="{{ asset('img/fd_logo_branco_g.png') }}"></img>
-        </div>
+    <footer class="container-fluid bg-blue-img mt-3">
+      <div class="container">
+        <div class="row ">
+          <div class="col-lg-4 col-sm-12 col-md-4">
+            <img class="img w-100 p-4" src="{{ asset('img/fd_logo_branco_g.png') }}"></img>
+          </div>
 
-        <div class="col-lg-4 col-sm-12 col-md-4">
+          <div class="col-lg-4 col-sm-12 col-md-4">
 
-        </div>
+          </div>
 
-        <div class="col-lg-4 col-sm-12 col-md-4">
-          <ul class='list-unstyled p-4 pb-0'>
-            <li class="mb-2">
-              <i class="fab fa-whatsapp"></i>
-              Whatsapp
-              <p> +55 41 99251 6138 </p>
-            </li>
+          <div class="col-lg-4 col-sm-12 col-md-4">
+            <ul class='list-unstyled p-4 pb-0'>
+              <li class="mb-2">
+                <i class="fab fa-whatsapp"></i>
+                Whatsapp
+                <p> +55 41 99251 6138 </p>
+              </li>
 
-            <li class="mb-2">
-              <i class="far fa-envelope"></i>
-              Email:
-              <p >contato@fontouradesenvolvimento.com.br </p>
-            </li>
+              <li class="mb-2">
+                <i class="far fa-envelope"></i>
+                Email:
+                <p>contato@fontouradesenvolvimento.com.br </p>
+              </li>
 
-            <li class="">
-              <i class="far fa-map"></i>
-              Endereço:
-              <p> Rua Rio Piquiri, 699, Weissopolis, Ap 407A - Pinhais - PR </p>
-            </li>
-          </ul>
+              <li class="">
+                <i class="far fa-map"></i>
+                Endereço:
+                <p> Rua Rio Piquiri, 699, Weissopolis, Ap 407A - Pinhais - PR </p>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </footer>
 
     <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <form method="POST" action="{{ route('register') }}">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Registrar</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Registrar</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
               @csrf
               <div class="form-group mb-3">
-                  <label for="name" class="form-label">{{ __('basic.form.name') }}</label>
-                  <input id="nameRegister" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                <label for="name" class="form-label">{{ __('basic.form.name') }}</label>
+                <input id="nameRegister" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
-                  @error('name')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
+                @error('name')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
               </div>
 
               <div class="form-group mb-3">
-                  <label for="email" class="form-label">{{ __('basic.form.email') }}</label>
-                  <input id="emailRegister" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                <label for="email" class="form-label">{{ __('basic.form.email') }}</label>
+                <input id="emailRegister" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
-                  @error('email')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
+                @error('email')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
               </div>
 
               <div class="form-group mb-3">
-                  <label for="password" class="form-label">{{ __('basic.form.password') }}</label>
-                  <input id="password-register" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                <label for="password" class="form-label">{{ __('basic.form.password') }}</label>
+                <input id="password-register" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
-                  @error('password')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
+                @error('password')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
               </div>
 
               <div class="form-group  mb-3">
-                  <label for="password-confirm" class="form-label">{{ __('basic.form.confirm_password') }}</label>
-                  <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                <label for="password-confirm" class="form-label">{{ __('basic.form.confirm_password') }}</label>
+                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
               </div>
 
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">
-                    {{ __('basic.register') }}
-                </button>
+              <button type="submit" class="btn btn-primary">
+                {{ __('basic.register') }}
+              </button>
             </div>
           </div>
         </div>
@@ -302,43 +325,43 @@
 
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <form method="POST" action="{{ route('login') }}">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
               @csrf
               <div class="form-group mb-3">
-                  <label for="email" class="col-form-label"> {{ __('basic.form.email') }} </label>
-                  <input id="emailLogin" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                  @error('email')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
+                <label for="email" class="col-form-label"> {{ __('basic.form.email') }} </label>
+                <input id="emailLogin" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                @error('email')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
               </div>
 
               <div class="form-group">
-                  <label for="password" class="form-label"> {{ __('basic.form.password') }} </label>
-                  <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                  @error('password')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
+                <label for="password" class="form-label"> {{ __('basic.form.password') }} </label>
+                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                @error('password')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
               </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">
-                    {{ __('Login') }}
-                </button>
-                @if (Route::has('password.request'))
-                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                        {{ __('basic.forgot_your_password') }}
-                    </a>
-                @endif
+              <button type="submit" class="btn btn-primary">
+                {{ __('Login') }}
+              </button>
+              @if (Route::has('password.request'))
+              <a class="btn btn-link" href="{{ route('password.request') }}">
+                {{ __('basic.forgot_your_password') }}
+              </a>
+              @endif
             </div>
           </div>
         </div>
@@ -356,14 +379,15 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
-    $(document).ready(function() {
-      $('#summernote').summernote();
-      $('.select2').select2({
-        theme: 'bootstrap-5'
+      $(document).ready(function() {
+        $('#summernote').summernote();
+        $('.select2').select2({
+          theme: 'bootstrap-5'
+        });
       });
-    });
     </script>
 
     @yield('page_js')
   </body>
+
   </html>

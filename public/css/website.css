@@ -1,5 +1,5 @@
 body {
-  background: #eee;
+  background: #ffffff;
   background-attachment: fixed;
   background-size: cover;
 }
@@ -7,8 +7,6 @@ body {
 footer {
   color: #fff;
   padding: 10px;
-  background-color: #5C97BF;
-  border-radius: 10px 10px 0px 0px;
 }
 
 .bg-blue-img {
