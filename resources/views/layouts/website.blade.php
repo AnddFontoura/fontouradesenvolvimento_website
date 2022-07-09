@@ -23,7 +23,7 @@
   </head>
 
   <body class=''>
-    <nav class="navbar  fixed-top navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar  fixed-top navbar-expand-lg navbar-light bg-light shadow">
       <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}"><img src="{{ asset('img/texto.png') }}" width='200px'></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,7 @@
               <a class="nav-link active" aria-current="page" href="#"> Home </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="#"> Blog </a>
+              <a class="nav-link active" href="{{ url('blog') }}"> Blog </a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="#"> Sistemas </a>
@@ -169,15 +169,6 @@
             </div>
             @endauth
 
-            <div class="p-4 mb-3 bg-light rounded shadow">
-              <h4 class="fst-italic"> Sobre </h4>
-              <p class="mb-0">
-                Esse site é uma aventura de um programador entediado que abriu uma empresa para receber
-                como pessoa Jurídica. Dessa maneira o conteúdo é extremamente variável e possui até coisas
-                não relacionadas a programação.
-              </p>
-            </div>
-
             <div class="mb-3">
               <h4 class="fst-italic">Últimas publicações</h4>
               <ol class="list-unstyled mb-0">
@@ -189,7 +180,7 @@
                 <div class='alert alert-danger'> Nenhuma publicação encontrada </div>
                 @else
                 @foreach($lastFiveNews as $lastNews)
-                <li><a href="#"> {{ $$lastNews->name }} </a></li>
+                <li><a href="#"> {{ $lastNews->title }} </a></li>
                 @endforeach
                 @endif
               </ol>

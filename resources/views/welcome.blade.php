@@ -1,9 +1,6 @@
 @extends('layouts.website')
 
 @section('content')
-    <div class="alert alert-danger" role="alert">
-        Em construção
-    </div>
 
     <article class="blog-post">
         <h2 class="blog-post-title"> Página em construção </h2>

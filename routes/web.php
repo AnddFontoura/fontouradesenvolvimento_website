@@ -44,6 +44,9 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['prefix' => 'blog'], function() {
+
+    Route::get('/', 'BlogController@homePost');
+
     Route::group(['prefix' => 'posts'], function() {
         Route::match(['get','post'], '/', 'BlogController@listPosts');
         Route::get('{id}', 'BlogController@showPost');

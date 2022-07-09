@@ -37,7 +37,7 @@
                                 @foreach($news as $new)
                                     <tr>
                                         <td>{{ $new->id }}</td>
-                                        <td>{{ $new->name }}</td>
+                                        <td>{{ $new->title }}</td>
                                         <td style="text-align: right">
                                             <a href="{{ url('admin/news/view') }}/{{ $new->id }}" class="btn btn-warning"> <i class="far fa-eye"></i> </a>
                                             <a href="{{ url('admin/news/form') }}/{{ $new->id }}" class="btn btn-primary"> <i class="far fa-edit"></i> </a>

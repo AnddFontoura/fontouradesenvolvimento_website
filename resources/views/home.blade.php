@@ -9,6 +9,6 @@
         @endif
 
     <div class="alert alert-success" role="alert">
-        You are logged in!
+        Seja bem vindo de volta, <b> {{ Auth::user()->name }} </b> !
     </div>
 @endsection

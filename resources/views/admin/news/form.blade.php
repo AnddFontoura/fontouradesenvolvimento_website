@@ -2,6 +2,10 @@
 
 @section('content')
     <div class="row">
+        <div class="col-12 mb-3">
+            <a class="btn btn-success" href="{{ url('admin/news') }}"> Listar Notícias </a>
+        </div>
+        
         <div class="col-md-12">
             <form action="{{ url('admin/news/save') }}@if(isset($news)){!! '/' . $news->id !!}@endif" method="post" enctype="multipart/form-data">
                 @csrf
@@ -33,7 +37,7 @@
 
                         <div class="form-group mb-3">
                             <span> Nome da Notícia </span>
-                            <input class="form-control" type="text" maxlength="250" name="name" required value="@if(isset($news)){{ $news->name }}@else{{ old('name') }}@endif">
+                            <input class="form-control" type="text" maxlength="250" name="title" required value="@if(isset($news)){{ $news->name }}@else{{ old('name') }}@endif">
                         </div>
 
                         <div class="form-group mb-3">

@@ -32,7 +32,7 @@ class NewsController extends Controller
         }
 
         if (!empty($newsName)) {
-            $news = $news->where('name', 'like', '%' . $newsName . '%');
+            $news = $news->where('title', 'like', '%' . $newsName . '%');
         }
 
         $news = $news->paginate(env('PAGINATE_AMOUNT'));
@@ -66,13 +66,13 @@ class NewsController extends Controller
     {
         $this->validate($request, [
             'news_category_id' => 'required|int',
-            'name' => 'required|string|max:500|min:4|unique:news',
+            'title' => 'required|string|max:500|min:4|unique:news',
             'description' => 'nullable|string|min:1',
             'header_image' => 'nullable|string|mime:jpg,png,jpeg',
             'footer_image' => 'nullable|string|mime:jpg,png,jpeg',
         ]);
 
-        $request = $request->only(['news_category_id','name', 'description', 'header_image', 'footer_image']);
+        $request = $request->only(['news_category_id','title', 'description', 'header_image', 'footer_image']);
 
         $news = News::create(array_merge(
                 [

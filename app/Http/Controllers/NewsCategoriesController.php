@@ -72,7 +72,7 @@ class NewsCategoriesController extends Controller
 
         $newsCategory = NewsCategory::create($request);
 
-        return redirect('admin/news-category')->with('messageSuccess', 'Categoria de notícia adicionada com sucesso');
+        return redirect('admin/news')->with('messageSuccess', 'Categoria de notícia adicionada com sucesso');
     }
 
     public function show($id)
