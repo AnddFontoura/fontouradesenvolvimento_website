@@ -176,13 +176,15 @@
                 $lastFiveNews = Helper::getLastFiveNews();
                 @endphp
 
-                @if(count($lastFiveNews) == 0)
-                <div class='alert alert-danger'> Nenhuma publicação encontrada </div>
-                @else
-                @foreach($lastFiveNews as $lastNews)
-                <li><a href="#"> {{ $lastNews->title }} </a></li>
-                @endforeach
-                @endif
+                <?php
+                if(count($lastFiveNews) == 0) {
+                  echo "<div class='alert alert-danger'> Nenhuma publicação encontrada </div>";
+                } else {
+                  foreach($lastFiveNews as $lastNews) {
+                      echo "<li><a href='#'> {{ $lastNews->title }} </a></li>";
+                    }
+                  }
+                ?>
               </ol>
             </div>
 
@@ -254,22 +256,22 @@
         </div>
       </div>
     </footer>
-
-    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
       <form method="POST" action="{{ route('register') }}">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Registrar</h5>
+              <h5 class="modal-title" id="registerModalLabel">Registrar</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               @csrf
               <div class="form-group mb-3">
                 <label for="name" class="form-label">{{ __('basic.form.name') }}</label>
-                <input id="nameRegister" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                <input id="nameRegister" type="text" class="form-control @error('registerName') is-invalid @enderror" name="registerName" value="{{ old('registerName') }}" required autocomplete="name" autofocus>
 
-                @error('name')
+                @error('registerName')
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
                 </span>
@@ -278,9 +280,9 @@
 
               <div class="form-group mb-3">
                 <label for="email" class="form-label">{{ __('basic.form.email') }}</label>
-                <input id="emailRegister" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                <input id="emailRegister" type="email" class="form-control @error('registerEmail') is-invalid @enderror" name="registerEmail" value="{{ old('registerEmail') }}" required autocomplete="registerEmail">
 
-                @error('email')
+                @error('registerEmail')
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
                 </span>
@@ -289,9 +291,9 @@
 
               <div class="form-group mb-3">
                 <label for="password" class="form-label">{{ __('basic.form.password') }}</label>
-                <input id="password-register" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                <input id="password-register" type="password" class="form-control @error('registerPassword') is-invalid @enderror" name="registerPassword" required autocomplete="registerPassword">
 
-                @error('password')
+                @error('registerPassword')
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
                 </span>
@@ -300,7 +302,7 @@
 
               <div class="form-group  mb-3">
                 <label for="password-confirm" class="form-label">{{ __('basic.form.confirm_password') }}</label>
-                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                <input id="password-confirm" type="password" class="form-control" name="registerPassword_confirmation" required autocomplete="registerPassword_confirmation">
               </div>
 
             </div>
@@ -314,12 +316,12 @@
       </form>
     </div>
 
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
       <form method="POST" action="{{ route('login') }}">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+              <h5 class="modal-title" id="loginModalLabel">Login</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -377,6 +379,22 @@
         });
       });
     </script>
+
+    @if ($errors->has('registerEmail') || $errors->has('registerName') || $errors->has('registerPassword'))
+      <script> 
+        $(document).ready(function() {
+          $('#registerModal').modal('toggle')
+        });
+      </script>
+    @endif
+
+    @if ($errors->has('email') || $errors->has('password'))
+      <script> 
+        $(document).ready(function() {
+          $('#loginModal').modal('toggle')
+        });
+      </script>
+    @endif
 
     @yield('page_js')
   </body>
