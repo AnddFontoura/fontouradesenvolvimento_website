@@ -181,7 +181,7 @@
                   echo "<div class='alert alert-danger'> Nenhuma publicação encontrada </div>";
                 } else {
                   foreach($lastFiveNews as $lastNews) {
-                      echo "<li><a href='#'> {{ $lastNews->title }} </a></li>";
+                      echo "<li><a href='#'> $lastNews->title </a></li>";
                     }
                   }
                 ?>

@@ -37,7 +37,7 @@
 
                         <div class="form-group mb-3">
                             <span> Nome da Notícia </span>
-                            <input class="form-control" type="text" maxlength="250" name="title" required value="@if(isset($news)){{ $news->name }}@else{{ old('name') }}@endif">
+                            <input class="form-control" type="text" maxlength="250" name="title" required value="@if(isset($news)){{ $news->title }}@else{{ old('title') }}@endif">
                         </div>
 
                         <div class="form-group mb-3">

@@ -82,7 +82,7 @@ class NewsController extends Controller
             )
         );
 
-        return redirect('news')->with('messageSuccess', 'Notícia adicionada com sucesso');
+        return redirect('admin/news')->with('messageSuccess', 'Notícia adicionada com sucesso');
     }
 
     /**
