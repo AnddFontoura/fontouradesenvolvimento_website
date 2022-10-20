@@ -4,6 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon.ico') }}">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -173,7 +174,7 @@
               <h4 class="fst-italic">Últimas publicações</h4>
               <ol class="list-unstyled mb-0">
                 @php
-                $lastFiveNews = Helper::getLastFiveNews();
+                  $lastFiveNews = Helper::getLastFiveNews();
                 @endphp
 
                 <?php
@@ -181,7 +182,7 @@
                   echo "<div class='alert alert-danger'> Nenhuma publicação encontrada </div>";
                 } else {
                   foreach($lastFiveNews as $lastNews) {
-                      echo "<li><a href='#'> $lastNews->title </a></li>";
+                      echo "<li><a href='#'> {$lastNews->title} </a></li>";
                     }
                   }
                 ?>
